@@ -1,0 +1,2 @@
+DOMAIN-SUFFIX,xn--9kqv03dn4b.xyz
+DOMAIN-SUFFIX,jwxt.zhcpt.edu.cn
