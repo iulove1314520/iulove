@@ -247,9 +247,9 @@ function operator(proxies, targetPlatform) {
         const sortPatterns = [
         /活动/i,                                      // 优先匹配 "活动"
         /直连/i,                                      // 优先匹配 "直连"
+        /Game|游戏/i,                                 // 游戏节点匹配模式
         /\|\s*0\.\s*[123456789]X/i,                   // 匹配低倍
         /实验性/i,                                    // 实验性匹配模式
-        /Game|游戏/i,                                 // 游戏节点匹配模式
         /香港|HK|Hong Kong|港/i,                      // 香港匹配模式
         /台湾|TW|Taiwan|台/i,                         // 台湾匹配模式
         /日本|JP|Tokyo|Osaka|Japan|日(?!利亚)/i,      // 日本匹配模式，排除 "日利亚" (尼日利亚)
