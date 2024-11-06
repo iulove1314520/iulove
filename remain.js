@@ -14,18 +14,21 @@ function operator(proxies, targetPlatform) {
         
       // 删除名称中符合条件的字段
         proxy.name = proxy.name.replace(/\b(DMIT|Eons|Gcore|Jinx|Nearoute|Cloudflare|Misaka|Sakura|DigitalOcean|AWS|SG\.GS|Akile|Akari|PQS|Apol|Bangmod|Oracle|Linode|Gbnetwork|Webconex|Eastern|Aliyun|Google Cloud|Microsoft Azure|Vultr|OVH|Hetzner|Tencent Cloud|IDCloudhost|UpCloud|Scaleway|Rackspace|HostGator|GoDaddy|DreamHost|Fastly|Bluehost|InMotion|Kinsta|Namecheap|Hostinger)\b/gi, '');
-  
+        proxy.name = proxy.name.replace(/IPLC|家宽|IEPL/gi, '');
+        
       // 再进行新的正则重命名操作
       proxy.name = proxy.name
         .replace(/\b(Rakuten|HKT|HKBN|HiNet|Seednet|M1|CAT|Exetel|Biglobe|KDDI|SoNet|SoftBank|TM|KT|SK|LG)\b/gi, 'HOME')
         .replace(/\b(Frontier|Verizon|AT&T|T-Mobile|Videotron|SFR|Vodafone|Virgin|BT)\b/gi, 'HOME')
         .replace(/\b(CMCC|CUCC|CTCC|NTT|Singtel|Telstra|Optus|Telkom|PLDT|AIS|Maxis|Globe|STC)\b/gi, 'HOME')
-        .replace(/\b(Etisalat|MTN|Orange|TIM|Telefónica|Deutsche Telekom|Bell|Rogers|Telus)\b/gi, 'HOME')
+        .replace(/\b(CTM|Etisalat|MTN|Orange|TIM|Telefónica|Deutsche Telekom|Bell|Rogers|Telus)\b/gi, 'HOME')
         .replace(/\b(China Mobile|China Unicom|China Telecom|Nippon Telegraph and Telephone|Saudi Telecom Company)\b/gi, 'HOME')
         .replace(/\b(Advanced Info Service|MTN Group|Telecom Italia|Philippine Long Distance Telephone)\b/gi, 'HOME')
         .replace(/\b(British Telecommunications|Emirates Telecommunications Corporation|Orange SA|Telefónica SA)\b/gi, 'HOME')
         .replace(/\b(Vodafone Group|Bell Canada|Rogers Communications|Telus Corporation|Singapore Telecommunications)\b/gi, 'HOME')
         .replace(/\b(Korea Telecom|SK Telecom|LG U\+|T-Mobile US|American Telephone and Telegraph)\b/gi, 'HOME')
+        .replace(/狮城/g, '新加坡')                                           // 将 "狮城" 替换为 "新加坡"
+        .replace(/\[home\]/gi, '丨HOME 2x')
         .replace(/\b(HK|Hong Kong)\b/g, '香港')
         .replace(/\b(MO|Macao|Macau)\b/g, '澳门')
         .replace(/\b(TW|Taiwan)\b/g, '台湾')
@@ -216,9 +219,11 @@ function operator(proxies, targetPlatform) {
         .replace(/\b(BM|Bermuda)\b/g, '百慕达')
         .replace(/\b(TL|East Timor|Timor-Leste)\b/g, '东帝汶')
 
-    
+      // 将 [任意文本] 1x 转换为 [相同文本] 2x
+        proxy.name = proxy.name.replace(/\[([^\]]+)\]\s*1x/gi, '[$1] 2x');
+        
       // 过滤不符合指定内容的代理名称
-      const filterPattern = /\b(套餐|到期|有效|剩余|版本|已用|过期|失联|测试|官方|网址|备用|群|TEST|客服|网站|获取|订阅|流量|机场|下次|官址|联系|邮箱|工单|学术|USE|USED|TOTAL|EXPIRE|EMAIL)\b/i;
+      const filterPattern = /(?:\W|^)(订阅|套餐|到期|有效|剩余|版本|已用|过期|失联|测试|官方|网址|备用|群|TEST|客服|网站|获取|流量|机场|下次|官址|联系|邮箱|工单|学术|USE|USED|TOTAL|EXPIRE|EMAIL)(?:\W|$)/i;
       if (filterPattern.test(proxy.name)) return null; // 过滤匹配的代理
 
       return proxy;
@@ -227,19 +232,21 @@ function operator(proxies, targetPlatform) {
     .sort((a, b) => {
       // 排序操作，根据提供的排序规则优先级排序
       const sortPatterns = [
-        /\|\s*0\.\s*[23]X/i,
-        /香港|HK|Hong Kong|港/i,
-        /台湾|TW|Taiwan|台/i,
-        /日本|JP|Tokyo|Osaka|Japan|日/i,
-        /新加坡|SG|Singapore|新(?!西兰)/i,
-        /美国|US|United States|LA|Los Angeles|New York|San Francisco|美/i,
-        /韩国|KR|South Korea|首尔/i,
-        /马来西亚|MY|Malaysia|大马/i,
-        /英国|UK|United Kingdom|伦敦/i,
-        /德国|DE|Germany|柏林/i,
-        /法国|FR|France|巴黎/i
+        /活动/i,                                      // 优先匹配 "活动"
+        /直连/i,                                      // 优先匹配 "直连"
+        /\|\s*0\.\s*[23]X/i,                         // 匹配 | 0.2X 或 | 0.3X
+        /香港|HK|Hong Kong|港/i,                       // 香港匹配模式
+        /台湾|TW|Taiwan|台/i,                          // 台湾匹配模式
+        /日本|JP|Tokyo|Osaka|Japan|日(?!利亚)/i,      // 日本匹配模式，排除 "日利亚" (尼日利亚)
+        /新加坡|SG|Singapore|新(?!西兰)/i,            // 新加坡匹配模式，排除 "新西兰"
+        /美国|US|United States|LA|Los Angeles|New York|San Francisco|美/i,  // 美国匹配模式
+        /韩国|KR|South Korea|首尔/i,                  // 韩国匹配模式
+        /马来西亚|MY|Malaysia|大马/i,                // 马来西亚匹配模式
+        /英国|UK|United Kingdom|伦敦/i,               // 英国匹配模式
+        /德国|DE|Germany|柏林/i,                      // 德国匹配模式
+        /法国|FR|France|巴黎/i                        // 法国匹配模式
       ];
-
+      
       // 按照规则优先级进行排序
       for (let pattern of sortPatterns) {
         const aMatch = pattern.test(a.name);
@@ -250,3 +257,4 @@ function operator(proxies, targetPlatform) {
       return 0; // 如果都未匹配任何模式或都匹配，保留原顺序
     });
 }
+ 
