@@ -22,7 +22,8 @@ function operator(proxies, targetPlatform) {
         proxy.name = proxy.name.replace(/\b(DMIT|Eons|Gcore|Jinx|Nearoute|Cloudflare|Misaka|Sakura|DigitalOcean|AWS|SG\.GS|Akile|Akari|PQS|Apol|Bangmod|Oracle|Linode|Gbnetwork|Webconex|Eastern|Aliyun|Google Cloud|Microsoft Azure|Vultr|OVH|Hetzner|Tencent Cloud|IDCloudhost|UpCloud|Scaleway|Rackspace|HostGator|GoDaddy|DreamHost|Fastly|Bluehost|InMotion|Kinsta|Namecheap|Hostinger)\b/gi, '');
         proxy.name = proxy.name.replace(/家宽|IEPL|中继|Base|Plus|限速|5M/gi, '');
         proxy.name = proxy.name.replace(/\(HW\)/gi, '');
-        proxy.name = proxy.name.replace(/[\u4e00-\u9fff]+/g, '');
+        proxy.name = proxy.name.replace(/(乙酰氨基酚|次硝酸甘油|甲基苯丙酮|双氯芬酸钠|澳士蛋白酶|羟苯磺酸钠|氨基酮戊酸|盐酸氨溴索|磷酸肌酸钠|盐酸可待因|磺胺甲恶唑|尼达莫德酮)/g, '');
+
 
       // 再进行新的正则重命名操作
       proxy.name = proxy.name
