@@ -8,6 +8,8 @@ function operator(proxies, targetPlatform) {
       
       // 先进行原有的重命名操作
       proxy.name = proxy.name
+        .replace(/\[Promotion.*?\]\s*x\s*(\d\.\d+)/i, '| $1x')
+        .replace(/(\d+\.\d)0+x/g, '$1x')
         .replace(/\[(\d+(\.\d+)?[Xx])\]/g, '| $1')                  // 将 [数字X] 或 [数字x] 格式替换为 | 数字x
         .replace(/\[(Aliyun|UDPN)\s*(\d+[Xx])\]/g, '| $2')           // 将 [Aliyun或UDPN 数字X或数字x] 格式替换为 | 数字x
         .replace(/([^\s\d])(\d)/g, '$1 $2')                          // 匹配非空格数字，添加空格分隔
@@ -15,13 +17,13 @@ function operator(proxies, targetPlatform) {
         .replace(/\s{2,}/g, ' ')                                     // 移除多余空格
         .replace(/X/g, 'x')                                          // 将结果中的所有 X 替换为 x
         .trim();
-      
         
       // 删除名称中符合条件的字段
         proxy.name = proxy.name.replace(/\b(DMIT|Eons|Gcore|Jinx|Nearoute|Cloudflare|Misaka|Sakura|DigitalOcean|AWS|SG\.GS|Akile|Akari|PQS|Apol|Bangmod|Oracle|Linode|Gbnetwork|Webconex|Eastern|Aliyun|Google Cloud|Microsoft Azure|Vultr|OVH|Hetzner|Tencent Cloud|IDCloudhost|UpCloud|Scaleway|Rackspace|HostGator|GoDaddy|DreamHost|Fastly|Bluehost|InMotion|Kinsta|Namecheap|Hostinger)\b/gi, '');
         proxy.name = proxy.name.replace(/家宽|IEPL|中继|Base|Plus|限速|5M/gi, '');
         proxy.name = proxy.name.replace(/\(HW\)/gi, '');
-        
+        proxy.name = proxy.name.replace(/[\u4e00-\u9fff]+/g, '');
+
       // 再进行新的正则重命名操作
       proxy.name = proxy.name
         .replace(/\b(Rakuten|HKT|HKBN|HiNet|Seednet|M1|CAT|Exetel|Biglobe|KDDI|SoNet|SoftBank|TM|KT|SK|LG)\b/gi, 'HOME')
@@ -241,23 +243,32 @@ function operator(proxies, targetPlatform) {
     .filter(proxy => proxy !== null) // 去除已过滤的代理
     .sort((a, b) => {
       // 排序操作，根据提供的排序规则优先级排序
-      const sortPatterns = [
+        const sortPatterns = [
         /活动/i,                                      // 优先匹配 "活动"
         /直连/i,                                      // 优先匹配 "直连"
-        /\|\s*0\.\s*[23]X/i,                         // 匹配 | 0.2X 或 | 0.3X
+        /\|\s*0\.\s*[123456789]X/i,                   // 匹配低倍
         /实验性/i,                                    // 实验性匹配模式
-        /Game|游戏/i,                                    // 游戏节点匹配模式
-        /香港|HK|Hong Kong|港/i,                       // 香港匹配模式
-        /台湾|TW|Taiwan|台/i,                          // 台湾匹配模式
+        /Game|游戏/i,                                 // 游戏节点匹配模式
+        /香港|HK|Hong Kong|港/i,                      // 香港匹配模式
+        /台湾|TW|Taiwan|台/i,                         // 台湾匹配模式
         /日本|JP|Tokyo|Osaka|Japan|日(?!利亚)/i,      // 日本匹配模式，排除 "日利亚" (尼日利亚)
         /新加坡|SG|Singapore|新(?!西兰)/i,            // 新加坡匹配模式，排除 "新西兰"
         /美国|US|United States|LA|Los Angeles|New York|San Francisco|美/i,  // 美国匹配模式
         /韩国|KR|South Korea|首尔/i,                  // 韩国匹配模式
-        /马来西亚|MY|Malaysia|大马/i,                // 马来西亚匹配模式
+        /马来西亚|MY|Malaysia|大马/i,                 // 马来西亚匹配模式
         /英国|UK|United Kingdom|伦敦/i,               // 英国匹配模式
         /德国|DE|Germany|柏林/i,                      // 德国匹配模式
-        /法国|FR|France|巴黎/i                        // 法国匹配模式
-      ];
+        /法国|FR|France|巴黎/i,                       // 法国匹配模式
+        /\|\s*0\.1x/i,                                // 匹配 | 0.1x
+        /\|\s*0\.2x/i,                                // 匹配 | 0.2x
+        /\|\s*0\.3x/i,                                // 匹配 | 0.3x
+        /\|\s*0\.4x/i,                                // 匹配 | 0.4x
+        /\|\s*0\.5x/i,                                // 匹配 | 0.5x
+        /\|\s*0\.6x/i,                                // 匹配 | 0.6x
+        /\|\s*0\.7x/i,                                // 匹配 | 0.7x
+        /\|\s*0\.8x/i,                                // 匹配 | 0.8x
+        /\|\s*0\.9x/i                                 // 匹配 | 0.9x
+        ];
       
       // 按照规则优先级进行排序
       for (let pattern of sortPatterns) {
