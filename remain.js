@@ -27,7 +27,7 @@ function operator(proxies, targetPlatform) {
         .replace(/\b(British Telecommunications|Emirates Telecommunications Corporation|Orange SA|Telefónica SA)\b/gi, 'HOME')
         .replace(/\b(Vodafone Group|Bell Canada|Rogers Communications|Telus Corporation|Singapore Telecommunications)\b/gi, 'HOME')
         .replace(/\b(Korea Telecom|SK Telecom|LG U\+|T-Mobile US|American Telephone and Telegraph)\b/gi, 'HOME')
-        .replace(/狮城/g, '新加坡')                                           // 将 "狮城" 替换为 "新加坡"
+        .replace(/狮城/g, '新加坡')                                          
         .replace(/\[home\]/gi, '丨HOME 2x')
         .replace(/\b(HK|Hong Kong)\b/g, '香港')
         .replace(/\b(MO|Macao|Macau)\b/g, '澳门')
