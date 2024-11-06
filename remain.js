@@ -19,19 +19,21 @@ function operator(proxies, targetPlatform) {
         
       // 删除名称中符合条件的字段
         proxy.name = proxy.name.replace(/\b(DMIT|Eons|Gcore|Jinx|Nearoute|Cloudflare|Misaka|Sakura|DigitalOcean|AWS|SG\.GS|Akile|Akari|PQS|Apol|Bangmod|Oracle|Linode|Gbnetwork|Webconex|Eastern|Aliyun|Google Cloud|Microsoft Azure|Vultr|OVH|Hetzner|Tencent Cloud|IDCloudhost|UpCloud|Scaleway|Rackspace|HostGator|GoDaddy|DreamHost|Fastly|Bluehost|InMotion|Kinsta|Namecheap|Hostinger)\b/gi, '');
-        proxy.name = proxy.name.replace(/IPLC|家宽|IEPL|中继/gi, '');
+        proxy.name = proxy.name.replace(/家宽|IEPL|中继|Base|Plus|限速|5M/gi, '');
+        proxy.name = proxy.name.replace(/\(HW\)/gi, '');
         
       // 再进行新的正则重命名操作
       proxy.name = proxy.name
         .replace(/\b(Rakuten|HKT|HKBN|HiNet|Seednet|M1|CAT|Exetel|Biglobe|KDDI|SoNet|SoftBank|TM|KT|SK|LG)\b/gi, 'HOME')
-        .replace(/\b(Frontier|Verizon|AT&T|T-Mobile|Videotron|SFR|Vodafone|Virgin|BT)\b/gi, 'HOME')
-        .replace(/\b(CMCC|CUCC|CTCC|NTT|Singtel|Telstra|Optus|Telkom|PLDT|AIS|Maxis|Globe|STC)\b/gi, 'HOME')
-        .replace(/\b(CTM|Etisalat|MTN|Orange|TIM|Telefónica|Deutsche Telekom|Bell|Rogers|Telus)\b/gi, 'HOME')
+        .replace(/\b(Frontier|Verizon|AT&T|ATT|T-Mobile|Videotron|SFR|Vodafone|Virgin|BT)\b/gi, 'HOME')
+        .replace(/\b(SKT|CMCC|CUCC|CTCC|NTT|Singtel|Telstra|Optus|Telkom|PLDT|AIS|Maxis|Globe|STC)\b/gi, 'HOME')
+        .replace(/\b(TMNet|CTM|Etisalat|MTN|Orange|TIM|Telefónica|Deutsche Telekom|Bell|Rogers|Telus)\b/gi, 'HOME')
         .replace(/\b(China Mobile|China Unicom|China Telecom|Nippon Telegraph and Telephone|Saudi Telecom Company)\b/gi, 'HOME')
         .replace(/\b(Advanced Info Service|MTN Group|Telecom Italia|Philippine Long Distance Telephone)\b/gi, 'HOME')
         .replace(/\b(British Telecommunications|Emirates Telecommunications Corporation|Orange SA|Telefónica SA)\b/gi, 'HOME')
         .replace(/\b(Vodafone Group|Bell Canada|Rogers Communications|Telus Corporation|Singapore Telecommunications)\b/gi, 'HOME')
         .replace(/\b(Korea Telecom|SK Telecom|LG U\+|T-Mobile US|American Telephone and Telegraph)\b/gi, 'HOME')
+        .replace(/乐天移动/g, 'HOME')
         .replace(/狮城/g, '新加坡')                                          
         .replace(/\[home\]/gi, '丨HOME 2x')
         .replace(/\b(HK|Hong Kong)\b/g, '香港')
@@ -228,6 +230,7 @@ function operator(proxies, targetPlatform) {
         proxy.name = proxy.name.replace(/\[([^\]]+)\]\s*1x/gi, '[$1] 2x');
         proxy.name = proxy.name.replace(/(香港|新加坡|美国|日本|台湾)\s*实验性\s*1\b/g, '$1 实验性');
         proxy.name = proxy.name.replace(/(香港|新加坡|美国|日本|台湾)\s*(高级|标准)\s*(\d+)\b/g, '$1 $2 $3');
+        proxy.name = proxy.name.replace(/([^\s])HOME\b/g, '$1 HOME');
 
       // 过滤不符合指定内容的代理名称
       const filterPattern = /(?:\W|^)(订阅|套餐|到期|有效|剩余|版本|已用|过期|失联|测试|官方|网址|备用|群|TEST|客服|网站|获取|流量|机场|下次|官址|联系|邮箱|工单|学术|USE|USED|TOTAL|EXPIRE|EMAIL|Traffic)(?:\W|$)/i;
@@ -243,6 +246,7 @@ function operator(proxies, targetPlatform) {
         /直连/i,                                      // 优先匹配 "直连"
         /\|\s*0\.\s*[23]X/i,                         // 匹配 | 0.2X 或 | 0.3X
         /实验性/i,                                    // 实验性匹配模式
+        /Game|游戏/i,                                    // 游戏节点匹配模式
         /香港|HK|Hong Kong|港/i,                       // 香港匹配模式
         /台湾|TW|Taiwan|台/i,                          // 台湾匹配模式
         /日本|JP|Tokyo|Osaka|Japan|日(?!利亚)/i,      // 日本匹配模式，排除 "日利亚" (尼日利亚)
