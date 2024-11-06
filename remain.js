@@ -14,7 +14,7 @@ function operator(proxies, targetPlatform) {
         
       // 删除名称中符合条件的字段
         proxy.name = proxy.name.replace(/\b(DMIT|Eons|Gcore|Jinx|Nearoute|Cloudflare|Misaka|Sakura|DigitalOcean|AWS|SG\.GS|Akile|Akari|PQS|Apol|Bangmod|Oracle|Linode|Gbnetwork|Webconex|Eastern|Aliyun|Google Cloud|Microsoft Azure|Vultr|OVH|Hetzner|Tencent Cloud|IDCloudhost|UpCloud|Scaleway|Rackspace|HostGator|GoDaddy|DreamHost|Fastly|Bluehost|InMotion|Kinsta|Namecheap|Hostinger)\b/gi, '');
-        proxy.name = proxy.name.replace(/IPLC|家宽|IEPL/gi, '');
+        proxy.name = proxy.name.replace(/IPLC|家宽|IEPL|中继/gi, '');
         
       // 再进行新的正则重命名操作
       proxy.name = proxy.name
@@ -221,9 +221,11 @@ function operator(proxies, targetPlatform) {
 
       // 将 [任意文本] 1x 转换为 [相同文本] 2x
         proxy.name = proxy.name.replace(/\[([^\]]+)\]\s*1x/gi, '[$1] 2x');
-        
+        proxy.name = proxy.name.replace(/(香港|新加坡|美国|日本|台湾)\s*实验性\s*1\b/g, '$1 实验性');
+        proxy.name = proxy.name.replace(/(香港|新加坡|美国|日本|台湾)\s*(高级|标准)\s*(\d+)\b/g, '$1 $2 $3');
+
       // 过滤不符合指定内容的代理名称
-      const filterPattern = /(?:\W|^)(订阅|套餐|到期|有效|剩余|版本|已用|过期|失联|测试|官方|网址|备用|群|TEST|客服|网站|获取|流量|机场|下次|官址|联系|邮箱|工单|学术|USE|USED|TOTAL|EXPIRE|EMAIL)(?:\W|$)/i;
+      const filterPattern = /(?:\W|^)(订阅|套餐|到期|有效|剩余|版本|已用|过期|失联|测试|官方|网址|备用|群|TEST|客服|网站|获取|流量|机场|下次|官址|联系|邮箱|工单|学术|USE|USED|TOTAL|EXPIRE|EMAIL|Traffic)(?:\W|$)/i;
       if (filterPattern.test(proxy.name)) return null; // 过滤匹配的代理
 
       return proxy;
@@ -235,6 +237,7 @@ function operator(proxies, targetPlatform) {
         /活动/i,                                      // 优先匹配 "活动"
         /直连/i,                                      // 优先匹配 "直连"
         /\|\s*0\.\s*[23]X/i,                         // 匹配 | 0.2X 或 | 0.3X
+        /实验性/i,                                    // 实验性匹配模式
         /香港|HK|Hong Kong|港/i,                       // 香港匹配模式
         /台湾|TW|Taiwan|台/i,                          // 台湾匹配模式
         /日本|JP|Tokyo|Osaka|Japan|日(?!利亚)/i,      // 日本匹配模式，排除 "日利亚" (尼日利亚)
