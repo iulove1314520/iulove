@@ -3,14 +3,19 @@
 function operator(proxies, targetPlatform) {
   return proxies
     .map(proxy => {
+      // 精准匹配 "M1" 并重命名为 "HOME"
+      proxy.name = proxy.name.replace(/(?<=\b|\s)M1(?=\b|\s)/g, 'HOME');
+      
       // 先进行原有的重命名操作
       proxy.name = proxy.name
-        .replace(/\[(\d+(\.\d+)?X)\]/g, '| $1')                  // 将 [数字X] 格式替换为 | 数字X
-        .replace(/\[(Aliyun|UDPN)\s*(\d+X)\]/g, '| $2')           // 将 [Aliyun或UDPN 数字X] 格式替换为 | 数字X
-        .replace(/([^\s\d])(\d)/g, '$1 $2')                       // 匹配非空格数字，添加空格分隔
-        .replace(/(?<!\S)\[Wcloud\](?!\S)/g, '| 2X')              // 匹配 [Wcloud] 替换为 | 2X
-        .replace(/\s{2,}/g, ' ')                                  // 移除多余空格
+        .replace(/\[(\d+(\.\d+)?[Xx])\]/g, '| $1')                  // 将 [数字X] 或 [数字x] 格式替换为 | 数字x
+        .replace(/\[(Aliyun|UDPN)\s*(\d+[Xx])\]/g, '| $2')           // 将 [Aliyun或UDPN 数字X或数字x] 格式替换为 | 数字x
+        .replace(/([^\s\d])(\d)/g, '$1 $2')                          // 匹配非空格数字，添加空格分隔
+        .replace(/(?<!\S)\[Wcloud\](?!\S)/g, '| 2x')                 // 匹配 [Wcloud] 替换为 | 2x
+        .replace(/\s{2,}/g, ' ')                                     // 移除多余空格
+        .replace(/X/g, 'x')                                          // 将结果中的所有 X 替换为 x
         .trim();
+      
         
       // 删除名称中符合条件的字段
         proxy.name = proxy.name.replace(/\b(DMIT|Eons|Gcore|Jinx|Nearoute|Cloudflare|Misaka|Sakura|DigitalOcean|AWS|SG\.GS|Akile|Akari|PQS|Apol|Bangmod|Oracle|Linode|Gbnetwork|Webconex|Eastern|Aliyun|Google Cloud|Microsoft Azure|Vultr|OVH|Hetzner|Tencent Cloud|IDCloudhost|UpCloud|Scaleway|Rackspace|HostGator|GoDaddy|DreamHost|Fastly|Bluehost|InMotion|Kinsta|Namecheap|Hostinger)\b/gi, '');
