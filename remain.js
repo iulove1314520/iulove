@@ -232,7 +232,7 @@ function operator(proxies, targetPlatform) {
       // 将 [任意文本] 1x 转换为 [相同文本] 2x
         proxy.name = proxy.name.replace(/\[([^\]]+)\]\s*1x/gi, '[$1] 2x');
         proxy.name = proxy.name.replace(/(香港|新加坡|美国|日本|台湾)\s*实验性\s*1\b/g, '$1 实验性');
-        proxy.name = proxy.name.replace(/(香港|新加坡|美国|日本|台湾)\s*(高级|标准)\s*(\d+)\b/g, '$1 $2 $3');
+        proxy.name = proxy.name.replace(/(香港|新加坡|美国|日本|台湾|韩国|马来西亚|英国|德国|法国|摩尔多瓦|乌克兰|意大利|匈牙利|西班牙|土耳其|荷兰|加拿大|阿根廷|巴西|智利|澳大利亚|新西兰|印尼|泰国|越南|印度|巴基斯坦|以色列|阿联酋|菲律宾|埃及)\s*(高级|标准)\s*(\d+)\b/g, '$1 $2 $3');
         proxy.name = proxy.name.replace(/([^\s])HOME\b/g, '$1 HOME');
 
       // 过滤不符合指定内容的代理名称
