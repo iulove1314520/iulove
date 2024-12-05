@@ -35,7 +35,7 @@ function operator(proxies, targetPlatform) {
       // 4. 运营商标准化处理
       proxy.name = proxy.name
         // 4.1 运营商重命名为 HOME
-        .replace(/\b(CTM|HGC|Rakuten|HKT|HKBN|HiNet|Seednet|M1|CAT|Exetel|Biglobe|KDDI|SoNet|SoftBank|TM|KT|SK|LG)\b/gi, 'HOME')
+        .replace(/\b(NTT|CTM|HGC|Rakuten|HKT|HKBN|HiNet|Seednet|M1|CAT|Exetel|Biglobe|KDDI|SoNet|SoftBank|TM|KT|SK|LG)\b/gi, 'HOME')
         .replace(/\b(Frontier|Verizon|AT&T|ATT|T-Mobile|Videotron|SFR|Vodafone|Virgin|BT)\b/gi, 'HOME')
         // ... (保持原有的运营商替换规则)
 
