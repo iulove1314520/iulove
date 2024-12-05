@@ -17,7 +17,7 @@ function operator(proxies, targetPlatform) {
         .replace(/\[(Aliyun|UDPN)\s*(\d+[Xx])\]/g, '| $2')         // 处理供应商倍率格式
         .replace(/([^\s\d])(\d)/g, '$1 $2')                        // 数字前添加空格分隔
         .replace(/(?<!\S)\[Wcloud\](?!\S)/g, '| 2x')               // Wcloud特殊处理
-        .replace(/\s{2,}/g, ' ')                                   // 合并��余空格
+        .replace(/\s{2,}/g, ' ')                                   // 合并多余空格
         .replace(/X/g, 'x')                                        // 统一倍率标记为小写
         .trim();                                                   // 去除首尾空格
         
@@ -78,7 +78,7 @@ function operator(proxies, targetPlatform) {
         .replace(/\b(ID|Indonesia|Jakarta)\b/g, '印尼')             // 添加雅加达
         .replace(/\b(MY|Malaysia|Kuala Lumpur)\b/g, '马来西亚')      // 添加吉隆坡
         .replace(/\b(TH|Thailand|Bangkok)\b/g, '泰国')              // 添加曼谷
-        .replace(/\b(VN|Vietnam|Hanoi|Ho Chi Minh)\b/g, '越南')     // 添加河内和胡志明
+        .replace(/\b(VN|Vietnam|Hanoi|Ho Chi Minh)\b/g, '越南')     // 添加河内和胡志
         .replace(/\b(PH|Philippines|Manila)\b/g, '菲律宾')          // 添加马尼拉
         .replace(/\b(IN|India|Mumbai|Delhi)\b/g, '印度')           // 添加孟买和德里
         
@@ -97,41 +97,50 @@ function operator(proxies, targetPlatform) {
         // 5.8 其他地区标准化
         .replace(/\b(RU|Russia|Moscow)\b/g, '俄罗斯')                  // 添加莫斯科
         .replace(/\b(ZA|South Africa|Johannesburg)\b/g, '南非')        // 添加约翰内斯堡
-        .replace(/\b(EG|Egypt|Cairo)\b/g, '埃���')                      // 添加开罗
+        .replace(/\b(EG|Egypt|Cairo)\b/g, '埃及')                      // 添加开罗
         
         // 添加新的区域名称标准化规则
-        .replace(/\b(HKG)\b/g, '香港')
-        .replace(/\b(TWN)\b/g, '台湾')
-        .replace(/\b(JPN)\b/g, '日本')
-        .replace(/\b(SGP)\b/g, '新加坡')
-        .replace(/\b(USA)\b/g, '美国')
-        .replace(/\b(GBR)\b/g, '英国')
-        .replace(/\b(DEU)\b/g, '德国')
-        .replace(/\b(TUR)\b/g, '土耳其')
-        .replace(/\b(MYS)\b/g, '马来西亚')
-        .replace(/\b(NGA)\b/g, '尼日利亚')
-        .replace(/\b(ARG)\b/g, '阿根廷')
-        .replace(/\b(ISR)\b/g, '以色列')
-        .replace(/\b(DPK)\b/g, '朝鲜')
-        .replace(/\b(ATA)\b/g, '南极')
-        .replace(/\b(VAT)\b/g, '梵蒂冈')
-        .replace(/\b(CUB)\b/g, '古巴')
-        .replace(/\b(EGP)\b/g, '埃及')
-        .replace(/\b(GRC)\b/g, '希腊')
-        .replace(/\b(GRL)\b/g, '格陵兰')
-        .replace(/\b(PAN)\b/g, '巴拿马')
-        .replace(/\b(MEX)\b/g, '墨西哥')
-        .replace(/\b(MAC)\b/g, '澳门')
-        .replace(/\b(FRA)\b/g, '法国')
-        .replace(/\b(PHL)\b/g, '菲律宾')
-        .replace(/\b(NZL)\b/g, '新西兰')
-        .replace(/\b(CHE)\b/g, '瑞士')
+        // 1. 处理纯代码的情况
+        .replace(/^(HKG|TWN|JPN|SGP|USA|GBR|DEU|TUR|MYS|NGA|ARG|ISR|DPK|ATA|VAT|CUB|EGP|GRC|GRL|PAN|MEX|MAC|FRA|PHL|NZL|CHE)\s+(?![^\s]*[\u4e00-\u9fa5])/g, match => {
+          const codeMap = {
+            'HKG': '香港',
+            'TWN': '台湾',
+            'JPN': '日本',
+            'SGP': '新加坡',
+            'USA': '美国',
+            'GBR': '英国',
+            'DEU': '德国',
+            'TUR': '土耳其',
+            'MYS': '马来西亚',
+            'NGA': '尼日利亚',
+            'ARG': '阿根廷',
+            'ISR': '以色列',
+            'DPK': '朝鲜',
+            'ATA': '南极',
+            'VAT': '梵蒂冈',
+            'CUB': '古巴',
+            'EGP': '埃及',
+            'GRC': '希腊',
+            'GRL': '格陵兰',
+            'PAN': '巴拿马',
+            'MEX': '墨西哥',
+            'MAC': '澳门',
+            'FRA': '法国',
+            'PHL': '菲律宾',
+            'NZL': '新西兰',
+            'CHE': '瑞士'
+          };
+          const code = match.trim();
+          return (codeMap[code] || code) + ' ';
+        })
+        // 2. 删除中文名称前的国家代码
+        .replace(/^(MEx|HKG|TWN|JPN|SGP|USA|GBR|DEU|TUR|MYS|NGA|ARG|ISR|DPK|ATA|VAT|CUB|EGP|GRC|GRL|PAN|MEX|MAC|FRA|PHL|NZL|CHE)\s+([\u4e00-\u9fa5])/g, '$2')
         
         // 处理 FUN 标记
         .replace(/\s*FUN$/g, '')
         
-        // 处理 Home 倍率
-        .replace(/\s*Home\s*(\d+x)/gi, ' | $1');
+        // 统一处理倍率格式
+        .replace(/(?:\s*Home\s*|\s+)(\d+(?:\.\d+)?)[xX]$/g, ' | $1x');
 
       // 6. 标签格式标准化处理（新增）
       proxy.name = proxy.name
@@ -205,4 +214,5 @@ const sortPatterns = [
   /\|\s*0\.8x/i,                               // 5.8 0.8倍率节点
   /\|\s*0\.9x/i                                // 5.9 0.9倍率节点
 ];
+ 
  
