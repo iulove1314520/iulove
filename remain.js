@@ -78,7 +78,7 @@ function operator(proxies, targetPlatform) {
         .replace(/\b(ID|Indonesia|Jakarta)\b/g, '印尼')             // 添加雅加达
         .replace(/\b(MY|Malaysia|Kuala Lumpur)\b/g, '马来西亚')      // 添加吉隆坡
         .replace(/\b(TH|Thailand|Bangkok)\b/g, '泰国')              // 添加曼谷
-        .replace(/\b(VN|Vietnam|Hanoi|Ho Chi Minh)\b/g, '越南')     // 添加河内和胡志
+        .replace(/\b(VN|Vietnam|Hanoi|Ho Chi Minh)\b/g, '越南')     // 添加河内和胡志明
         .replace(/\b(PH|Philippines|Manila)\b/g, '菲律宾')          // 添加马尼拉
         .replace(/\b(IN|India|Mumbai|Delhi)\b/g, '印度')           // 添加孟买和德里
         
@@ -97,50 +97,7 @@ function operator(proxies, targetPlatform) {
         // 5.8 其他地区标准化
         .replace(/\b(RU|Russia|Moscow)\b/g, '俄罗斯')                  // 添加莫斯科
         .replace(/\b(ZA|South Africa|Johannesburg)\b/g, '南非')        // 添加约翰内斯堡
-        .replace(/\b(EG|Egypt|Cairo)\b/g, '埃及')                      // 添加开罗
-        
-        // 添加新的区域名称标准化规则
-        // 1. 处理纯代码的情况
-        .replace(/^(HKG|TWN|JPN|SGP|USA|GBR|DEU|TUR|MYS|NGA|ARG|ISR|DPK|ATA|VAT|CUB|EGP|GRC|GRL|PAN|MEX|MAC|FRA|PHL|NZL|CHE)\s+(?![^\s]*[\u4e00-\u9fa5])/g, match => {
-          const codeMap = {
-            'HKG': '香港',
-            'TWN': '台湾',
-            'JPN': '日本',
-            'SGP': '新加坡',
-            'USA': '美国',
-            'GBR': '英国',
-            'DEU': '德国',
-            'TUR': '土耳其',
-            'MYS': '马来西亚',
-            'NGA': '尼日利亚',
-            'ARG': '阿根廷',
-            'ISR': '以色列',
-            'DPK': '朝鲜',
-            'ATA': '南极',
-            'VAT': '梵蒂冈',
-            'CUB': '古巴',
-            'EGP': '埃及',
-            'GRC': '希腊',
-            'GRL': '格陵兰',
-            'PAN': '巴拿马',
-            'MEX': '墨西哥',
-            'MAC': '澳门',
-            'FRA': '法国',
-            'PHL': '菲律宾',
-            'NZL': '新西兰',
-            'CHE': '瑞士'
-          };
-          const code = match.trim();
-          return (codeMap[code] || code) + ' ';
-        })
-        // 2. 删除中文名称前的国家代码
-        .replace(/^(MEx|HKG|TWN|JPN|SGP|USA|GBR|DEU|TUR|MYS|NGA|ARG|ISR|DPK|ATA|VAT|CUB|EGP|GRC|GRL|PAN|MEX|MAC|FRA|PHL|NZL|CHE)\s+([\u4e00-\u9fa5])/g, '$2')
-        
-        // 处理 FUN 标记
-        .replace(/\s*FUN$/g, '')
-        
-        // 统一处理倍率格式
-        .replace(/(?:\s*Home\s*|\s+)(\d+(?:\.\d+)?)[xX]$/g, ' | $1x');
+        .replace(/\b(EG|Egypt|Cairo)\b/g, '埃及');                      // 添加开罗
 
       // 6. 标签格式标准化处理（新增）
       proxy.name = proxy.name
@@ -214,5 +171,4 @@ const sortPatterns = [
   /\|\s*0\.8x/i,                               // 5.8 0.8倍率节点
   /\|\s*0\.9x/i                                // 5.9 0.9倍率节点
 ];
- 
  
