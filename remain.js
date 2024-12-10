@@ -15,9 +15,9 @@ function operator(proxies, targetPlatform) {
         .replace(/(\d+\.\d)0+x/g, '$1x')                            // 删除倍率小数末尾的0
         .replace(/\[(\d+(\.\d+)?[Xx])\]/g, '| $1')                 // 统一倍率标记格式：[数字X] -> | 数字x
         .replace(/\[(Aliyun|UDPN)\s*(\d+[Xx])\]/g, '| $2')         // 处理供应商倍率格式
-        .replace(/([^\s\d])(\d)/g, '$1 $2')                        // 数字前添加空格分隔
+        .replace(/([^\s\d.])(\d)/g, '$1 $2')                        // 数字前添加空格分隔（排除小数点）
         .replace(/(?<!\S)\[Wcloud\](?!\S)/g, '| 2x')               // Wcloud特殊处理
-        .replace(/\s{2,}/g, ' ')                                   // 合并��余空格
+        .replace(/\s{2,}/g, ' ')                                   // 合并多余空格
         .replace(/X/g, 'x')                                        // 统一倍率标记为小写
         .trim();                                                   // 去除首尾空格
         
@@ -35,7 +35,7 @@ function operator(proxies, targetPlatform) {
       // 4. 运营商标准化处理
       proxy.name = proxy.name
         // 4.1 运营商重命名为 HOME
-        .replace(/\b(Vorboss|Comcast|Maxis|Sejong|NTT|CTM|HGC|Rakuten|HKT|HKBN|HiNet|Seednet|M1|CAT|Exetel|Biglobe|KDDI|SoNet|SoftBank|TM|KT|SK|LG)\b/gi, 'HOME')
+        .replace(/\b(i-Cable|Comcast|Maxis|Sejong|NTT|CTM|HGC|Rakuten|HKT|HKBN|HiNet|Seednet|M1|CAT|Exetel|Biglobe|KDDI|SoNet|SoftBank|TM|KT|SK|LG)\b/gi, 'HOME')
         .replace(/\b(Frontier|Verizon|AT&T|ATT|T-Mobile|Videotron|SFR|Vodafone|Virgin|BT)\b/gi, 'HOME')
         // ... (保持原有的运营商替换规则)
 
@@ -61,7 +61,7 @@ function operator(proxies, targetPlatform) {
         // 5.4 欧洲地区标准化
         .replace(/\b(FR|France)\b/g, '法国')
         .replace(/\b(DE|Germany)\b/g, '德国')
-        .replace(/\b(IT|Italy|Milano)\b/g, '意大利')         // 添加米兰
+        .replace(/\b(IT|Italy|Italia|Milano|Rome|Turin|Florence)\b/g, '���大利')  // 更新：添加Italia和更多城市
         .replace(/\b(ES|Spain|Madrid)\b/g, '西班牙')        // 添加马德里
         .replace(/\b(PT|Portugal|Lisbon)\b/g, '葡萄牙')     // 添加里斯本
         .replace(/\b(NL|Netherlands|Amsterdam)\b/g, '荷兰')  // 添加阿姆斯特丹
@@ -97,50 +97,84 @@ function operator(proxies, targetPlatform) {
         // 5.8 其他地区标准化
         .replace(/\b(RU|Russia|Moscow)\b/g, '俄罗斯')                  // 添加莫斯科
         .replace(/\b(ZA|South Africa|Johannesburg)\b/g, '南非')        // 添加约翰内斯堡
-        .replace(/\b(EG|Egypt|Cairo)\b/g, '埃及')                      // 添加开罗
+        .replace(/\b(EG|Egypt|Cairo)\b/g, '埃及')                     // 添加开罗
+        // 新增国家名称转换
+        .replace(/\b(Bangladesh|Dhaka)\b/g, '孟加拉')
+        .replace(/\b(Switzerland|Zurich|Geneva)\b/g, '瑞士')
+        .replace(/\b(Austria|Vienna)\b/g, '奥地利')
+        .replace(/\b(Iceland|Reykjavik)\b/g, '冰岛')
+        .replace(/\b(Poland|Warsaw)\b/g, '波兰')
+        .replace(/\b(Angola|Luanda)\b/g, '安哥拉')
+        .replace(/\b(Ukraine|Kiev)\b/g, '乌克兰')
+        .replace(/\b(Cambodia|Phnom Penh)\b/g, '柬埔寨')
+        .replace(/\b(Nepal|Kathmandu)\b/g, '尼泊尔')
+        .replace(/\b(Chile|Santiago)\b/g, '智利')
+        .replace(/\b(Colombia|Bogota)\b/g, '哥伦比亚')
+        .replace(/\b(Peru|Lima)\b/g, '秘鲁')
+        .replace(/\b(Bolivia|La Paz)\b/g, '玻利维亚')
+        .replace(/\b(Luxembourg|Luxembourg City)\b/g, '卢森堡')
+        .replace(/\b(Estonia|Tallinn)\b/g, '爱沙尼亚')
+        .replace(/\b(Hungary|Budapest)\b/g, '匈牙利')
+        .replace(/\b(Moldova|Chisinau)\b/g, '摩尔多瓦')
+        .replace(/\b(Romania|Bucharest)\b/g, '罗马尼亚')
+        .replace(/\b(Bulgaria|Sofia)\b/g, '保加利亚')
+        .replace(/\b(Serbia|Belgrade)\b/g, '塞尔维亚')
+        .replace(/\b(Greece|Athens)\b/g, '希腊')
+        .replace(/\b(Iraq|Baghdad)\b/g, '伊拉克')
+        .replace(/\b(Togo|Lome)\b/g, '多哥')
+        .replace(/\b(Tunisia|Tunis)\b/g, '突尼斯')
+        .replace(/\b(Pakistan|Islamabad|Karachi)\b/g, '巴基斯坦')
+        .replace(/\b(Kazakhstan|Astana)\b/g, '哈萨克斯坦')
+        .replace(/\b(Nigeria|Lagos|Abuja)\b/g, '尼日利亚')
+        .replace(/\b(Antarctica)\b/g, '南极洲')
+        // 添加更多洲国家
+        .replace(/\b(Croatia|Zagreb)\b/g, '克罗地亚')
+        .replace(/\b(Czech Republic|Czech|Czechia|Prague|Brno|Ostrava)\b/g, '捷克')  // 更新：添加Czechia和更多城市
+        .replace(/\b(Slovakia|Bratislava)\b/g, '斯洛伐克')
+        .replace(/\b(Slovenia|Ljubljana)\b/g, '斯洛文尼亚')
+        .replace(/\b(Latvia|Riga)\b/g, '拉脱维亚')
+        .replace(/\b(Lithuania|Vilnius)\b/g, '立陶宛')
+        .replace(/\b(Belarus|Minsk)\b/g, '白俄罗斯')
+        .replace(/\b(Malta|Valletta)\b/g, '马耳他')
+        .replace(/\b(Cyprus|Nicosia)\b/g, '塞浦路斯')
         
-        // 添加新的区域名称标准化规则
-        // 1. 处理纯代码的情况
-        .replace(/^(HKG|TWN|JPN|SGP|USA|GBR|DEU|TUR|MYS|NGA|ARG|ISR|DPK|ATA|VAT|CUB|EGP|GRC|GRL|PAN|MEX|MAC|FRA|PHL|NZL|CHE)\s+(?![^\s]*[\u4e00-\u9fa5])/g, match => {
-          const codeMap = {
-            'HKG': '香港',
-            'TWN': '台湾',
-            'JPN': '日本',
-            'SGP': '新加坡',
-            'USA': '美国',
-            'GBR': '英国',
-            'DEU': '德国',
-            'TUR': '土耳其',
-            'MYS': '马来西亚',
-            'NGA': '尼日利亚',
-            'ARG': '阿根廷',
-            'ISR': '以色列',
-            'DPK': '朝鲜',
-            'ATA': '南极',
-            'VAT': '梵蒂冈',
-            'CUB': '古巴',
-            'EGP': '埃及',
-            'GRC': '希腊',
-            'GRL': '格陵兰',
-            'PAN': '巴拿马',
-            'MEX': '墨西哥',
-            'MAC': '澳门',
-            'FRA': '法国',
-            'PHL': '菲律宾',
-            'NZL': '新西兰',
-            'CHE': '瑞士'
-          };
-          const code = match.trim();
-          return (codeMap[code] || code) + ' ';
-        })
-        // 2. 删除中文名称前的国家代码
-        .replace(/^(MEx|HKG|TWN|JPN|SGP|USA|GBR|DEU|TUR|MYS|NGA|ARG|ISR|DPK|ATA|VAT|CUB|EGP|GRC|GRL|PAN|MEX|MAC|FRA|PHL|NZL|CHE)\s+([\u4e00-\u9fa5])/g, '$2')
+        // 添加更多亚洲国家
+        .replace(/\b(Laos|Vientiane)\b/g, '老挝')
+        .replace(/\b(Myanmar|Yangon|Burma)\b/g, '缅甸')
+        .replace(/\b(Brunei|Bandar Seri Begawan)\b/g, '文莱')
+        .replace(/\b(Mongolia|Ulaanbaatar)\b/g, '蒙古')
+        .replace(/\b(Bhutan|Thimphu)\b/g, '不丹')
+        .replace(/\b(Sri Lanka|Colombo)\b/g, '斯里兰卡')
+        .replace(/\b(Maldives|Male)\b/g, '马尔代夫')
         
-        // 处理 FUN 标记
-        .replace(/\s*FUN$/g, '')
+        // 添加更多中东国家
+        .replace(/\b(Kuwait|Kuwait City)\b/g, '科威特')
+        .replace(/\b(Bahrain|Manama)\b/g, '巴林')
+        .replace(/\b(Qatar|Doha)\b/g, '卡塔尔')
+        .replace(/\b(Oman|Muscat)\b/g, '阿曼')
+        .replace(/\b(Yemen|Sanaa)\b/g, '也门')
+        .replace(/\b(Jordan|Amman)\b/g, '约旦')
+        .replace(/\b(Lebanon|Beirut)\b/g, '黎巴嫩')
         
-        // 统一处理倍率格式
-        .replace(/(?:\s*Home\s*|\s+)(\d+(?:\.\d+)?)[xX]$/g, ' | $1x');
+        // 添加更多非洲国家
+        .replace(/\b(Morocco|Rabat)\b/g, '摩洛哥')
+        .replace(/\b(Algeria|Algiers)\b/g, '阿尔及利亚')
+        .replace(/\b(Libya|Tripoli)\b/g, '利比亚')
+        .replace(/\b(Sudan|Khartoum)\b/g, '苏丹')
+        .replace(/\b(Ethiopia|Addis Ababa)\b/g, '埃塞俄比亚')
+        .replace(/\b(Kenya|Nairobi)\b/g, '肯尼亚')
+        .replace(/\b(Tanzania|Dodoma)\b/g, '坦桑尼亚')
+        .replace(/\b(Uganda|Kampala)\b/g, '乌干达')
+        .replace(/\b(Ghana|Accra)\b/g, '加纳')
+        
+        // 添加更多美洲国家
+        .replace(/\b(Venezuela|Caracas)\b/g, '委内瑞拉')
+        .replace(/\b(Ecuador|Quito)\b/g, '厄瓜多尔')
+        .replace(/\b(Paraguay|Asuncion)\b/g, '巴拉圭')
+        .replace(/\b(Uruguay|Montevideo)\b/g, '乌拉圭')
+        .replace(/\b(Panama|Panama City)\b/g, '巴拿马')
+        .replace(/\b(Costa Rica|San Jose)\b/g, '哥斯达黎加')
+        .replace(/\b(Jamaica|Kingston)\b/g, '牙买加');
 
       // 6. 标签格式标准化处理（新增）
       proxy.name = proxy.name
@@ -158,7 +192,7 @@ function operator(proxies, targetPlatform) {
         .replace(/([^\s])HOME\b/g, '$1 HOME');
 
       // 9. 过滤无效节点
-      const filterPattern = /(?:\W|^)(订阅|套餐|到期|有效|剩余|版本|已用|过期|失联|测试|官方|网址|备用|群|TEST|客服|网站|获取|流量|机场|下次|官|系|邮箱|工单|学术|USE|USED|TOTAL|EXPIRE|EMAIL|Traffic)(?:\W|$)/i;
+      const filterPattern = /(?:\W|^)(订��|套餐|到期|有效|剩余|版本|已用|过期|失联|测试|官方|网址|备用|群|TEST|客服|网站|获取|流量|机场|下次|官|系|邮箱|工单|学术|USE|USED|TOTAL|EXPIRE|EMAIL|Traffic)(?:\W|$)/i;
       if (filterPattern.test(proxy.name)) return null;
 
       return proxy;
@@ -214,5 +248,4 @@ const sortPatterns = [
   /\|\s*0\.8x/i,                               // 5.8 0.8倍率节点
   /\|\s*0\.9x/i                                // 5.9 0.9倍率节点
 ];
- 
- 
+  
