@@ -178,7 +178,7 @@ function operator(proxies, targetPlatform) {
 
       // 6. 标签格式标准化处理（新增）
       proxy.name = proxy.name
-        .replace(/([\u4e00-\u9fa5]+)\s*\[(Pre|Lite|Std)\]\s*(\d+x)/gi, '$1 $2 | $3');
+        .replace(/([\u4e00-\u9fa5]+)\s*\[(Pre|Lite|Std|Ultra)\]\s*(\d+x)/gi, '$1 $2 | $3');
 
       // 7. 低倍率节点处理
       proxy.name = proxy.name
@@ -192,7 +192,7 @@ function operator(proxies, targetPlatform) {
         .replace(/([^\s])HOME\b/g, '$1 HOME');
 
       // 9. 过滤无效节点
-      const filterPattern = /(?:\W|^)(订��|套餐|到期|有效|剩余|版本|已用|过期|失联|测试|官方|网址|备用|群|TEST|客服|网站|获取|流量|机场|下次|官|系|邮箱|工单|学术|USE|USED|TOTAL|EXPIRE|EMAIL|Traffic)(?:\W|$)/i;
+      const filterPattern = /(?:\W|^)(订阅|套餐|到期|有效|剩余|版本|已用|过期|失联|测试|官方|网址|备用|群|TEST|客服|网站|获取|流量|机场|下次|官|系|邮箱|工单|学术|USE|USED|TOTAL|EXPIRE|EMAIL|Traffic)(?:\W|$)/i;
       if (filterPattern.test(proxy.name)) return null;
 
       return proxy;
