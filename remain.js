@@ -61,7 +61,7 @@ function operator(proxies, targetPlatform) {
         // 5.4 欧洲地区标准化
         .replace(/\b(FR|France)\b/g, '法国')
         .replace(/\b(DE|Germany)\b/g, '德国')
-        .replace(/\b(IT|Italy|Italia|Milano|Rome|Turin|Florence)\b/g, '���大利')  // 更新：添加Italia和更多城市
+        .replace(/\b(IT|Italy|Italia|Milano|Rome|Turin|Florence)\b/g, '意大利')  // 更新：添加Italia和更多城市
         .replace(/\b(ES|Spain|Madrid)\b/g, '西班牙')        // 添加马德里
         .replace(/\b(PT|Portugal|Lisbon)\b/g, '葡萄牙')     // 添加里斯本
         .replace(/\b(NL|Netherlands|Amsterdam)\b/g, '荷兰')  // 添加阿姆斯特丹
