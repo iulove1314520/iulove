@@ -36,6 +36,11 @@ DOMAIN-SUFFIX,servers.xeton.dev
 DOMAIN-SUFFIX,cc.ccemby.tk
 DOMAIN-SUFFIX,junsama233.vip
 DOMAIN-SUFFIX,makima.online
+DOMAIN-SUFFIX,tv.micu.hk
+DOMAIN-SUFFIX,tv1.micu.hk
+DOMAIN-SUFFIX,media.micu.hk
+DOMAIN-SUFFIX,media2.micu.h
+DOMAIN-SUFFIX,media3.micu.hk
 DOMAIN-KEYWORD,emby
 DOMAIN-KEYWORD,jmsooo
 DOMAIN-KEYWORD,odysseyplus
@@ -49,4 +54,5 @@ DOMAIN-KEYWORD,theater
 DOMAIN-KEYWORD,anime
 DOMAIN-KEYWORD,restrict
 DOMAIN-KEYWORD,aikan
+DOMAIN-KEYWORD,micu
 IP-CIDR,161.97.148.156/24,no-resolve
