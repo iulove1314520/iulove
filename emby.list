@@ -41,6 +41,8 @@ DOMAIN-SUFFIX,tv1.micu.hk
 DOMAIN-SUFFIX,media.micu.hk
 DOMAIN-SUFFIX,media2.micu.h
 DOMAIN-SUFFIX,media3.micu.hk
+DOMAIN-SUFFIX,313445.xyz
+DOMAIN-SUFFIX,nsfw.oceancloud.asia
 DOMAIN-KEYWORD,emby
 DOMAIN-KEYWORD,jmsooo
 DOMAIN-KEYWORD,odysseyplus
@@ -55,4 +57,5 @@ DOMAIN-KEYWORD,anime
 DOMAIN-KEYWORD,restrict
 DOMAIN-KEYWORD,aikan
 DOMAIN-KEYWORD,micu
+DOMAIN-KEYWORD,celluloid
 IP-CIDR,161.97.148.156/24,no-resolve
