@@ -43,6 +43,7 @@ DOMAIN-SUFFIX,media2.micu.h
 DOMAIN-SUFFIX,media3.micu.hk
 DOMAIN-SUFFIX,313445.xyz
 DOMAIN-SUFFIX,nsfw.oceancloud.asia
+DOMAIN-SUFFIX,public.shrekmedia.org
 DOMAIN-KEYWORD,emby
 DOMAIN-KEYWORD,jmsooo
 DOMAIN-KEYWORD,odysseyplus
@@ -58,4 +59,6 @@ DOMAIN-KEYWORD,restrict
 DOMAIN-KEYWORD,aikan
 DOMAIN-KEYWORD,micu
 DOMAIN-KEYWORD,celluloid
+DOMAIN-KEYWORD,shrekmedia
 IP-CIDR,161.97.148.156/24,no-resolve
+
