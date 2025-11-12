@@ -45,6 +45,7 @@ DOMAIN-SUFFIX,313445.xyz
 DOMAIN-SUFFIX,nsfw.oceancloud.asia
 DOMAIN-SUFFIX,public.shrekmedia.org
 DOMAIN-SUFFIX,newneeship.com
+DOMAIN-SUFFIX,stream.hz2rqsf.ruleset.dev
 DOMAIN-KEYWORD,newneeship
 DOMAIN-KEYWORD,emby
 DOMAIN-KEYWORD,jmsooo
@@ -63,5 +64,6 @@ DOMAIN-KEYWORD,micu
 DOMAIN-KEYWORD,celluloid
 DOMAIN-KEYWORD,shrekmedia
 IP-CIDR,161.97.148.156/24,no-resolve
+
 
 
